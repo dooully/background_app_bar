@@ -9,6 +9,7 @@ void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp();
+
   @override
   Widget build(BuildContext context) => new MaterialApp(
         title: 'Flutter Demo',
@@ -23,6 +24,7 @@ class MyHomePageSliver extends StatefulWidget {
   MyHomePageSliver({Key? key, this.title, this.counter}) : super(key: key);
   final String? title;
   final int? counter;
+
   @override
   State<StatefulWidget> createState() => new _MyHomePageSliverState();
 }
@@ -104,7 +106,7 @@ class _MyHomePageSliverState extends State<MyHomePageSliver> {
     });
     if (_counter % 7 == 0) {
       Navigator.of(context).pushReplacement(new MaterialPageRoute(
-        builder: (_) => new MyHomePage(
+        builder: (_) => new MyHomePageSliverBuilder(
           title: widget.title,
           counter: _counter,
         ),
@@ -117,6 +119,7 @@ class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key, this.title, this.counter}) : super(key: key);
   final String? title;
   final int? counter;
+
   @override
   _MyHomePageState createState() => new _MyHomePageState();
 }
@@ -191,5 +194,112 @@ class _MyHomePageState extends State<MyHomePage> {
         child: new Icon(Icons.add),
       ),
     );
+  }
+}
+
+class MyHomePageSliverBuilder extends StatefulWidget {
+  MyHomePageSliverBuilder({Key? key, this.title, this.counter}) : super(key: key);
+  final String? title;
+  final int? counter;
+
+  @override
+  State<StatefulWidget> createState() => new _MyHomePageSliverBuilderState();
+}
+
+class _MyHomePageSliverBuilderState extends State<MyHomePageSliverBuilder> {
+  int _counter = 0;
+
+  @override
+  Widget build(BuildContext context) => new Scaffold(
+        body: new NestedScrollView(
+          headerSliverBuilder: (_, __) => <Widget>[
+            new SliverAppBar(
+              expandedHeight: _APP_BAR_SIZE,
+              floating: false,
+              pinned: true,
+              snap: false,
+              elevation: 0.0,
+              backgroundColor: Colors.transparent,
+              flexibleSpace: new BackgroundFlexibleSpaceBar(
+                titleBuilder: (context, t) {
+                  return Opacity(
+                    opacity: t,
+                    child: Container(
+                      alignment: Alignment.topLeft,
+                      color: Colors.red,
+                      padding: EdgeInsets.only(left: 16, top: MediaQuery.of(context).padding.top + 15),
+                      child: Text(
+                        widget.title!,
+                        textAlign: TextAlign.left,
+                        style: TextStyle(color: Colors.white, fontSize: 19),
+                      ),
+                    ),
+                  );
+                },
+                background: new ClipRect(
+                  child: new Container(
+                    child: new BackdropFilter(
+                      filter: new ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                      child: new Container(
+                        decoration: new BoxDecoration(
+                          color: Colors.black.withOpacity(0.5),
+                        ),
+                      ),
+                    ),
+                    decoration: new BoxDecoration(
+                        image: new DecorationImage(
+                      image: new AssetImage(
+                        "images/bg.jpg",
+                      ),
+                      fit: BoxFit.fill,
+                    )),
+                  ),
+                ),
+              ),
+            ),
+          ],
+          body: new Center(
+            child: new Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new Text(
+                  "Photo by Matt Artz on Unsplash",
+                ),
+                new Text(
+                  "You have pushed the button this many times:",
+                ),
+                new Text(
+                  '$_counter',
+                  style: Theme.of(context).textTheme.headline4,
+                ),
+              ],
+            ),
+          ),
+        ),
+        floatingActionButton: new FloatingActionButton(
+          onPressed: _incrementCounter,
+          tooltip: 'Increment',
+          child: new Icon(Icons.add),
+        ),
+      );
+
+  @override
+  void initState() {
+    _counter = widget.counter ?? 0;
+    super.initState();
+  }
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+    if (_counter % 3 == 0) {
+      Navigator.of(context).pushReplacement(new MaterialPageRoute(
+        builder: (_) => new MyHomePage(
+          title: widget.title,
+          counter: _counter,
+        ),
+      ));
+    }
   }
 }

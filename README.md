@@ -11,6 +11,7 @@ Don't forget to tap + button 5 times
 [![Screenshot-1569417041.png](https://i.postimg.cc/28fWXhr0/Screenshot-1569417041.png)](https://postimg.cc/hhphXJJm)
 [![Screenshot-1569417048.png](https://i.postimg.cc/bNzJtTzf/Screenshot-1569417048.png)](https://postimg.cc/yWbsq0gL)
 [![Screenshot-1569417051.png](https://i.postimg.cc/s2Sy8QVJ/Screenshot-1569417051.png)](https://postimg.cc/yJVw3N3J)
+[![2021-06-11-6-25-31.gif](https://i.postimg.cc/Y0PqRXcF/2021-06-11-6-25-31.gif)](https://postimg.cc/sGprD4gf)
 
 
 ## Getting Started
